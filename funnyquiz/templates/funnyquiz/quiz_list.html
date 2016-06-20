@@ -1,0 +1,7 @@
+<h1> Quiz List! </h1>
+
+<ul>
+{% for quiz in quizes %}
+	<li><a href="{% url 'funnyquiz:quiz_welcome' quiz.QuizUrl %}"> {{quiz.QuizName}} </li>
+{% endfor %}
+</ul>

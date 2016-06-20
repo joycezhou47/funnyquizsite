@@ -2,7 +2,9 @@ from django.conf.urls import url
 
 from . import views
 
+app_name = 'funnyquiz'
 urlpatterns = [
-	url(r'^$', views.index, name='quiz_index'),
-
+	url(r'^$', views.quizList, name='quiz_index'),
+	url(r'^(?P<quiz_url>[^/]+)/$', views.quizWelcome, name='quiz_welcome')
+	
 ]
