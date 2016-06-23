@@ -1,5 +1,7 @@
 # -*- coding: UTF-8 -*-
 
+import pdb; pdb.set_trace()
+
 from django.shortcuts import render
 from django.http import HttpResponse
 from datetime import datetime
@@ -12,11 +14,15 @@ def quizList(request):
 	context = {'quizes' : quizes}
 	return render(request, 'funnyquiz/quiz_list.html', context)
 
+
+
 def quizWelcome(request, quiz_url):
 	for quiz in GetQuizList():
 		if quiz.QuizUrl == quiz_url:
 			cur_quiz = quiz
-	return HttpResponse(cur_quiz.QuizName)
+	
+	context = {'cur_quiz' : cur_quiz, 'time_clicked' : 1}
+	return render(request, 'funnyquiz/quiz_welcome.html', context)
 	
 
 

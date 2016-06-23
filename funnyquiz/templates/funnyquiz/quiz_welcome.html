@@ -1,0 +1,11 @@
+<h1> Get Ready For Quiz <h1>
+
+<body>
+	<p> {{cur_quiz.Name}} </p>
+	<form action = "{%url 'funnyquiz:quiz_welcome' cur_quiz.QuizUrl%}" method = "post">
+		{% csrf_token %}
+	<input type="submit" value = "Start!"/>
+	</form>
+	<p> {{time_clicked}} </p>
+</body>
+
