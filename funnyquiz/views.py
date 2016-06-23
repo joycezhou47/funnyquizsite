@@ -20,10 +20,16 @@ def quizWelcome(request, quiz_url):
 	for quiz in GetQuizList():
 		if quiz.QuizUrl == quiz_url:
 			cur_quiz = quiz
-	
-	context = {'cur_quiz' : cur_quiz, 'time_clicked' : 1}
-	return render(request, 'funnyquiz/quiz_welcome.html', context)
-	
+	if request.method == 'GET':
+		time_clicked = 1
+	elif request.method == 'POST':
+		time_clicked_str = request.COOKIES.get('clicked')
+		time_clicked = int(time_clicked_str) + 1
+	'''request.session['clicked'] = time_clicked'''
+	context = {'cur_quiz' : cur_quiz, 'time_clicked' : time_clicked}
+	response =  render(request, 'funnyquiz/quiz_welcome.html', context)
+	response.set_cookie('clicked', time_clicked)
+	return response
 
 
 def GetQuizList():
