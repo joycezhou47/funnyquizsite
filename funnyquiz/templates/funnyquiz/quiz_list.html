@@ -2,6 +2,7 @@
 
 <ul>
 {% for quiz in quizes %}
-	<li><a href="{% url 'funnyquiz:quiz_welcome' quiz.QuizUrl %}"> {{quiz.QuizName}} </li>
+	<li><a href="{% url 'funnyquiz:quiz_welcome' quiz.QuizUrl %}"> {{quiz.QuizName}} </a>
+	</li>
 {% endfor %}
 </ul>
