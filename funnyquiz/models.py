@@ -14,26 +14,30 @@ class Quiz(models.Model):
 
 
 class Question(models.Model):
-    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
+    Quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
     QuestionText = models.CharField(max_length=200)
     HasImage = models.BooleanField(default=False)
     QuestionImage = models.FileField()
-    CorrectAnswer = models.CharField(max_length=100)
-    Answer2 = models.CharField(max_length=100)
-    Answer3 = models.CharField(max_length=100)
-    Answer4 = models.CharField(max_length=100)
+    CorrectAnswer = models.ForeignKey("Answer", null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
         return self.pk + ' - ' + self.QuestionText
 
 
 class Answer(models.Model):
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    ParentQuestion = models.ForeignKey(Question, on_delete=models.CASCADE)
     AnswerText = models.CharField(max_length=100)
     AnswerImg = models.FileField()
 
     def __str__(self):
         return self.AnswerText
+    
+class QuizState(models.Model):
+    Quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
+    VisitorCount = models.IntegerField()
+    CompletionCount = models.IntegerField()
+    AvgCorrecteness = models.FloatField()
+    StdDev = models.FloatField()
 
 
 
