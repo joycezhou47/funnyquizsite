@@ -1,0 +1,11 @@
+{% extends 'funnyquiz/base.html' %}
+{% block title %}Result{% endblock %}
+
+{% block body %}
+<h1>{{ cur_quiz.QuizName }}</h1>
+<ul>
+    <li>{{ cur_quizstate.VisitorCount }}</li>
+    <li>{{ cur_quizstate.CompletionCount }}</li>
+</ul>
+<a href="{% url 'funnyquiz:quiz_welcome' cur_quiz.QuizUrl %}">Play again?</a>
+{% endblock %}
