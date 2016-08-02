@@ -33,11 +33,17 @@ def quizWelcome(request, quiz_url):
     elif request.method == 'POST':
         time_clicked_str = request.COOKIES.get('clicked')
         time_clicked = int(time_clicked_str)
-        correct_answer = random.choice(("answer1", "answer2", "answer3", "answer4"))
-        if request.POST.get(correct_answer, ""):
+        answer_id_selected = request.POST.get("answer", "")
+        answer_selected = get_object_or_404(Answer, pk=int(answer_id_selected))
+        if (answer_selected.IsCorrectAnswer):
             time_clicked += 1
+        '''correct_answer = random.choice(("answer1", "answer2", "answer3", "answer4"))
+        if request.POST.get(correct_answer, ""):
+            time_clicked += 1'''
     '''request.session['clicked'] = time_clicked'''
-    context = {'cur_quiz' : cur_quiz, 'time_clicked' : time_clicked}
+    next_question = random.choice(cur_quiz.question_set.all())
+    
+    context = {'cur_quiz' : cur_quiz, 'time_clicked' : time_clicked, 'this_question': next_question}
     response = render(request, 'funnyquiz/quiz_welcome.html', context)
     response.set_cookie('clicked', time_clicked)
     return response

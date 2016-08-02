@@ -7,7 +7,7 @@ class Quiz(models.Model):
     QuizUrl = models.CharField(max_length=200)
     UseStandardWelcomePage = models.BooleanField(default=True)
     WelcomeMessage = models.CharField(max_length=200)
-    WelcomeImage = models.FileField()
+    WelcomeImage = models.FileField(null=True, blank=True)
     UseStandardResultPage = models.BooleanField(default=True)
     CreatedTime = models.DateField()
 
@@ -18,19 +18,20 @@ class Quiz(models.Model):
 class Question(models.Model):
     Quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
     QuestionText = models.CharField(max_length=200)
-    QuestionHasImage = models.BooleanField(default=False)
-    QuestionImage = models.FileField()
-    CorrectAnswer = models.ForeignKey("Answer", null=True, on_delete=models.SET_NULL)
+    '''QuestionHasImage = models.BooleanField(default=False)'''
+    QuestionImage = models.FileField(null=True, blank=True)
+    
 
     def __str__(self):
-        return self.pk + ' - ' + self.QuestionText
+        return str(self.pk) + ' - ' + self.QuestionText
 
 
 class Answer(models.Model):
     ParentQuestion = models.ForeignKey(Question, on_delete=models.CASCADE)
     AnswerText = models.CharField(max_length=100)
-    AnswerImg = models.FileField()
-    AnswerHasImage = models.BooleanField(default=False)
+    AnswerImg = models.FileField(null=True, blank=True)
+    '''AnswerHasImage = models.BooleanField(default=False)'''
+    IsCorrectAnswer = models.BooleanField(default=False)
 
     def __str__(self):
         return self.AnswerText

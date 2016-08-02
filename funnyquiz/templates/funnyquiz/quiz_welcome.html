@@ -6,12 +6,20 @@
 
 	<body>
 		<p> {{cur_quiz.QuizName}} </p>
+		<p> {{this_question.QuestionText}} </p>
 		<form action = "{%url 'funnyquiz:quiz_welcome' cur_quiz.QuizUrl%}"
 			  method = "post">
 			{% csrf_token %}
-			<button type="submit" name="answer1" value="1"> Answer 1 </button>
+			{% for answer in this_question.answer_set.all %}
+			<button type="submit" name="answer" value="{{answer.id}}"> {{answer.AnswerText}} </button>
+		</br>
+			{% endfor %}
+
+
+
+			<!--<button type="submit" name="answer1" value="1"> Answer 1 </button>-->
 		</form>
-		<form action = "{%url 'funnyquiz:quiz_welcome' cur_quiz.QuizUrl%}"
+		<!--<form action = "{%url 'funnyquiz:quiz_welcome' cur_quiz.QuizUrl%}"
 			  method = "post">
 			{% csrf_token %}
 			<button type="submit" name="answer2" value="2"> Answer 2 </button>
@@ -25,7 +33,7 @@
 			  method = "post">
 			{% csrf_token %}
 			<button type="submit" name="answer4" value="4"> Answer 4 </button>
-		</form>
+		</form>-->
 		<p> {{time_clicked}} </p>
 		<form action="{% url 'funnyquiz:quiz_result' cur_quiz.QuizUrl %}"
 			  method="post">
